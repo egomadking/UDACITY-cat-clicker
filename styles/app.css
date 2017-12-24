@@ -1,0 +1,40 @@
+body {
+  font-family: "Nunito", sans-serif;
+  background-color: rgb(187, 179, 179);
+  font-size: 1.5em;
+}
+
+main, header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.title {
+  display: inline-flex;
+  align-self: center;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Roboto", sans-serif;
+  font: 600;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+}
+
+.catName, .clickCounter{
+  align-self: center;
+}
+
+.catPicture {
+  box-shadow: 2px 2px 2px 2px #888;
+  margin: 0 0 1em 0;
+  display: inline-block;
+}
+
+
+
