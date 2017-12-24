@@ -10,6 +10,21 @@ var cat = [{
   'name': 'Blued-eyes',
   'url': 'https://lh3.ggpht.com/kixazxoJ2ufl3ACj2I85Xsy-Rfog97BM75ZiLaX02KgeYramAEqlEHqPC3rKqdQj4C1VFnXXryadFs1J9A=s0#w=640&h=496',
   'clickCount': 0
+  },
+  {
+  'name': 'Max and Anne',
+  'url': 'https://lh5.ggpht.com/LfjkdmOKkGLvCt-VuRlWGjAjXqTBrPjRsokTNKBtCh8IFPRetGaXIpTQGE2e7ZCUaG2azKNkz38KkbM_emA=s0#w=640&h=454',
+  'clickCount': 0
+  },
+  {
+    'name': 'Bob',
+    'url': 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg',
+    'clickCount': 0
+  },
+  {
+    'name': 'Gloria',
+    'url': 'https://iheartcats.com/wp-content/uploads/2016/01/7411170072_a9579445e4_z.jpg',
+    'clickCount': 0
   }
 ];
 
