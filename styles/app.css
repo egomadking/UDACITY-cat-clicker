@@ -1,16 +1,46 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Nunito", sans-serif;
   background-color: rgb(187, 179, 179);
   font-size: 1.5em;
 }
 
-main, header {
+main {
+  display: flex;
+  justify-content: center;
+}
+
+header, #stage {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.title {
+#selector {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1em 2em 0;
+  padding: 1em;
+  max-height: 750px;
+  overflow-y: scroll;
+}
+
+#stage {
+  margin: 0 2em 2em 0;
+  flex-direction: column;
+}
+
+#selector, #stage {
+  border: #999 1px solid;
+  box-shadow: 2px 2px 18px -5px #888;
+  border-radius: 3px;
+  background-color: rgb(196, 192, 192)
+}
+
+.title, .miniTitle {
   display: inline-flex;
   align-self: center;
 }
@@ -36,5 +66,19 @@ h1, h2, h3, h4, h5 {
   display: inline-block;
 }
 
+.miniCard {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
 
+.catPrev {
+  width: 200px;
+}
 
+.catName {
+  margin-bottom: .25em;
+}
+.catThumb {
+  width: 100%
+}

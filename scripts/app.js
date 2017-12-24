@@ -43,7 +43,7 @@ function addCats(cat) {
     catCard[i].insertAdjacentHTML('beforeend',catName + catPic + clickCounterDispl);
   }
 }
-
+/*
 addCats(cat);
 
 main.addEventListener('click', addCounter, false);
@@ -60,3 +60,4 @@ function incrementCounter(e) {
   var counter = 'clickCounter' + e;
   document.getElementById(counter).innerHTML = cat[e].clickCount;
 }
+*/
