@@ -40,14 +40,14 @@ header, #stage {
   background-color: rgb(196, 192, 192)
 }
 
-.title, .miniTitle {
+.title {
   display: inline-flex;
   align-self: center;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: "Roboto", sans-serif;
-  font: 600;
+  font-weight: 600;
 }
 
 .card {
@@ -56,29 +56,29 @@ h1, h2, h3, h4, h5 {
   margin: 1em;
 }
 
-.catName, .clickCounter{
+.cat-name, .click-counter{
   align-self: center;
 }
 
-.catPicture {
+.cat-picture {
   box-shadow: 2px 2px 2px 2px #888;
   margin: 0 0 1em 0;
   display: inline-block;
 }
 
-.miniCard {
+.mini-card {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
 }
 
-.catPrev {
+.cat-prev {
   width: 200px;
 }
 
-.catName {
+.cat-name {
   margin-bottom: .25em;
 }
-.catThumb {
+.cat-thumb {
   width: 100%
 }
