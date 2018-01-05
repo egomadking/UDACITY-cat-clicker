@@ -1,2 +1,3 @@
 # UDACITY-cat-clicker
-cat-clicking app 
+
+cat-clicking app
