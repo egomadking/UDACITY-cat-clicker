@@ -6,6 +6,15 @@
 // 
 // OCTOPUS consists of stage.addEventListener(), 
 // selector.addEventLister(), and associated callbacks
+//
+// TODO
+// clean up HTML insertion with document.createElement(tagname, [options]),
+// element.id = 'someID', element.className = 'someClass', and
+// element.setAttribute('attrib', 'value')
+//
+
+var selector = document.getElementById('selector');
+var stage = document.getElementById('stage');
 
 var model = {
   adminMode: false,
@@ -70,9 +79,10 @@ var view = {
   },
 
   addAdminForm: function(e) {
+    //refactor!
     var cat = model.cat;
     var adminDiv = '<div id="admin">' + 
-    '<form id="console-form" action="" method="post">' +
+    '<form id="console-form">' +
     '</form></div>';
     stage.insertAdjacentHTML('beforeend', adminDiv);
     var formShell = document.getElementById('console-form');
@@ -87,58 +97,124 @@ var view = {
     '</label><input id="cat-url" type="url"' +
     ' name="url" value="' + cat[e].url + '">';
 
+    
+    var saveBtn = document.createElement('button');
+    saveBtn.id = 'save-button';
+    saveBtn.setAttribute('onclick', 'view.saveAdminForm();');
+    saveBtn.insertAdjacentText('afterbegin', 'Save');
+    var cancelBtn = document.createElement('button');
+    cancelBtn.id = 'cancel-button';
+    cancelBtn.setAttribute('onclick', 'view.removeAdminForm();');
+    cancelBtn.insertAdjacentText('afterbegin', 'Cancel');
+    var buttonDiv = document.createElement('div');
+    buttonDiv.appendChild(saveBtn);
+    buttonDiv.appendChild(cancelBtn);
+    
+
     var oD = '<div>';
     var cD = '</div>';
     var form = oD + name + click + cD + oD + url + cD;
 
     formShell.insertAdjacentHTML('beforeend', form);
+    formShell.appendChild(buttonDiv);
     
   },
 
   removeAdminForm: function() {
-    // check if values are the same as stored
-    // if different, confirm exit
-    // set adminMode = false
-    // call stageCat
+    var form = document.getElementById('admin');
+    form.remove();
+    model.adminMode = false;
+    view.toggleConsoleBtnName();
+  },
+
+  saveAdminForm: function() {
+    var name = document.getElementById('cat-name').value;
+    var click = parseInt(document.getElementById('clickCount').value);
+    var url = document.getElementById('cat-url').value;
+
+    controller.updateCatStore(name, click, url);
+    model.adminMode = false;
+    view.stageCat(model.currentCat);
+    view.toggleConsoleBtnName();
+  },
+
+  confirmAdminFormRemove: function() {
+    var formName = document.getElementById('cat-name').value;
+    var formClick = parseInt(document.getElementById('clickCount').value);
+    var formUrl = document.getElementById('cat-url').value;
+
+    var cat = model.currentCat;
+
+    var stageName = model.cat[cat].name;
+    var stageClick = model.cat[cat].clickCount;
+    var stageUrl = model.cat[cat].url;
+
+    if((formName === stageName) && 
+      (formClick === stageClick) && 
+      (formUrl === stageUrl)) {
+      return;
+    } else {
+      ret = confirm('You have unsaved changes. Do you wish to proceed?');
+      if(ret === true){
+        view.toggleConsoleBtnName();
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
 
   toggleConsoleBtnName: function() {
     var btn = document.getElementById('console-toggle');
     if(model.adminMode === false) {
-      btn = "Admin console";
+      btn.textContent = "Admin console";
     } else {
-      btn = "Exit console mode";
+      btn.textContent = "Exit console mode";
+    }
+  },
+
+  incrementCounter: function(e) {
+    var count = model.cat[e].clickCount;
+    var counterID = 'click-counter' + e;
+    document.getElementById(counterID).innerHTML = count;
+    if(model.adminMode === true) {
+      document.getElementById('clickCount').value = count;
     }
   }
 };
 
 var controller = {
-  
-  //I  should create an init containing
-  // 2 builder functions and event listeners
-  
-  //incrementCounter()
+  init: function() {
+    view.addCats(model.cat);
+    view.stageCat(model.currentCat);
+  },
 
   toggleAdmin: function() {
+    var cancel;
     if(model.adminMode === false) {
       model.adminMode = true;
     } else {
+      if(view.confirmAdminFormRemove() === false) {
+        // exits out of function if user hits cancel
+        return;
+      }
       model.adminMode = false;
+      // check to see if form data is different
     }
+    view.toggleConsoleBtnName();
+    
     view.stageCat(model.currentCat);
+  },
+
+  updateCatStore: function(name, click, url) {
+    model.cat[model.currentCat].name = name;
+    model.cat[model.currentCat].clickCount = click;
+    model.cat[model.currentCat].url = url;
   }
+
 };
 
-var selector = document.getElementById('selector');
-var stage = document.getElementById('stage');
-
-
-function incrementCounter(e) {
-  //consider renaming to stageInfoRefresh
-  var counter = 'click-counter' + e;
-  document.getElementById(counter).innerHTML = model.cat[e].clickCount;
-  // if adminMode === true, update form
-}
+// END MVC, start mess
 
 stage.addEventListener('click', addCounter, false);
 
@@ -147,7 +223,7 @@ function addCounter(e) {
     num = e.target.attributes['data-cat-number'].nodeValue;
     model.currentCat = num;
     model.cat[num].clickCount++;
-    incrementCounter(num);
+    view.incrementCounter(num);
   }
 }
 
@@ -161,7 +237,6 @@ function addSelector(e) {
 }
 
 // app init
-view.addCats(model.cat);
-view.stageCat(model.currentCat);
+controller.init();
 
 //need event listener for submit-cancel buttons
